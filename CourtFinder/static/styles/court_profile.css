@@ -1,13 +1,25 @@
 .court-container {
-  margin-top: 20px;
+  margin-top: -60px;
 }
 
-.review-container{
-  margin-top: 50px;
+h1 {
+  font-size: 25px;
 }
-.add-review{
-  margin-top: 50px;
-  margin-bottom: 30px;
+
+h2 {
+  font-size: 18px;
+}
+
+.court-title-card{
+  margin-bottom: 50px;
+}
+
+.icons {
+  width: 40px;
+}
+
+.cart-carousel {
+  margin-bottom: 50px;
 }
 
 .court-carousel-item{
@@ -18,8 +30,12 @@
   height: 100%;
 }
 
-.bookmark {
-  width: 25px;
+.review-container{
+  margin-top: 50px;
+}
+.add-review{
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .review-profile-img{

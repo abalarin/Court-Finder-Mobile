@@ -4,6 +4,95 @@
 {% block content %}
 <link rel="stylesheet" href="/static/styles/court_profile.css">
 
+<div class="court-container">
+  <div class="row">
+    <div class="col-md card border-light court-title-card">
+      <div class="card-body">
+        <h1>
+          {{ Court.name }}
+          <!-- Fav Button -->
+
+        </h1>
+
+        <div class="row">
+
+          <div class="col-md-3">
+            <h2 class="text-muted">Rating: N/A{{Court.rating}}</h2>
+          </div>
+
+          <div class="col-md-6">
+            {% if Court.membership_required == False %}
+            <h2 class="text-muted">Public</h2>
+            {% else %}
+            <h2 class="text-muted">Private</h2>
+            {% endif %}
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row justify-content-md-center">
+
+          <div class="col text-center">
+            <a class="btn btn-link favorite-btn" href="/favorite/{{Court.id}}">
+              <img class="icons" src="/static/open-iconic/svg/bookmark.svg">
+            </a>
+            <span class="text-muted">Bookmark</span>
+
+          </div>
+
+          <div class="col text-center">
+            <a class="btn btn-link favorite-btn" href="#">
+              <img class="icons" src="/static/open-iconic/svg/star.svg">
+            </a>
+            <span class="text-muted">Rate</span>
+          </div>
+
+          <div class="col text-center">
+            <a class="btn btn-link favorite-btn" href="/favorite/{{Court.id}}">
+              <img class="icons" src="/static/open-iconic/svg/comment-square.svg">
+            </a>
+            <span class="text-muted">Review</span>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div id="carouselExampleInterval" class="carousel slide cart-carousel" data-ride="carousel">
+
+        <div class="carousel-inner">
+          {% if Court.images|length %}
+          {% for image in Court.images %}
+          <div class="carousel-item court-carousel-item item{% if loop.index == 1 %} active{% endif %}">
+            <img class="d-block w-100 carousel-img" src="{{image}}">
+          </div>
+          {% endfor %}
+          {% else %}
+          <div class="carousel-item active">
+            <img src="https://s3-media2.fl.yelpcdn.com/bphoto/rztnIqWOVqAXyj-mhnkSbQ/ls.jpg" class="d-block w-100" alt="...">
+          </div>
+          {% endif %}
+        </div>
+
+        <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
 <div id="googleMap" style="width:100%;height:400px;"></div>
 
 <script>
@@ -37,66 +126,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5Sr3oT1HlWBky0ex_akZc-uuNUWy51E8&callback=myMap">
 </script>
 
-<div class="court-container">
-  <div class="row">
-
-    <div class="col-md-4">
-      <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-
-        <div class="carousel-inner">
-          {% if Court.images|length %}
-          {% for image in Court.images %}
-          <div class="carousel-item court-carousel-item item{% if loop.index == 1 %} active{% endif %}">
-            <img class="d-block w-100 carousel-img" src="{{image}}">
-          </div>
-          {% endfor %}
-          {% else %}
-          <div class="carousel-item active">
-            <img src="https://s3-media2.fl.yelpcdn.com/bphoto/rztnIqWOVqAXyj-mhnkSbQ/ls.jpg" class="d-block w-100" alt="...">
-          </div>
-          {% endif %}
-        </div>
-
-        <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-
-    </div>
-
-    <div class="col-md">
-      <div class="card-body">
-        <h1>
-          {{ Court.name }}
-          <a class="btn btn-outline-secondary" href="/favorite/{{Court.id}}">
-            <img class="bookmark" src="/static/open-iconic/svg/bookmark.svg">
-            Favorite
-          </a>
-        </h1>
-        <h6>{{ Court.address }}</h6>
-
-        <div class="row">
-          <div class="col-md-3">
-            <p>Rating: N/A{{Court.rating}}</p>
-          </div>
-          <div class="col-md-6">
-            <p>Membership Required: {{ Court.membership_required }}</p>
-          </div>
-        </div>
-
-        <p>{{ Court.description }}</p>
-
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <!-- View Reviews -->
 <div class="review-container">
   <h2 class="text-center"> Court Reviews </h2>
@@ -113,17 +142,6 @@
     </div>
   </div>
   {% endfor %}
-</div>
-
-<div class="add-review">
-  <form method="POST" action="/court/{{Court.id}}/review">
-    <div class="form-group">
-      <h2 class="text-center"> Add Review</h2>
-      <textarea class="form-control" name="court_review" rows="3"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-  </form>
 </div>
 
 

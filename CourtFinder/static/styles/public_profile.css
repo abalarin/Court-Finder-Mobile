@@ -1,14 +1,46 @@
-#_friends {
-  display: none;
+.icons {
+  width: 25px;
+  margin-right: 10px;
+}
+.icons-sm {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.profile-img{
+  margin: 40px;
+  margin-top: -40px;
+}
+
+.username{
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.favortie-court {
+  margin-top: 10px;
+  margin-bottom: 35px;
+  font-size: 20px;
+}
+
+.add-friend-btn {
+  margin-bottom: 30px;
+}
+
+.menu-row{
+  border-top: 1px solid rgba(0, 0, 0, .5);
+  border-bottom: 1px solid rgba(0, 0, 0, .5);
+}
+
+.menu-list-group{
+  width: 100%;
 }
 
 .review {
   margin-bottom: 15px;
 }
 
-.add-friend {
-  width: 25px;
-}
+
 
 .court-address {
   font-size: 18px;

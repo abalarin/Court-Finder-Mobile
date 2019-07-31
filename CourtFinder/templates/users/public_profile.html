@@ -7,60 +7,54 @@
 <script type="text/javascript" src="/static/scripts/public_profile.js"></script>
 
 <div class="row">
-  <div class="col-4">
-    <div class="profile-img">
-      <img class="card-img-top" src="{{ url_for('static', filename='images/basketball.png') }}" alt="Profile Image">
-    </div>
+  <div class="profile-overview">
+    <div class="card-body">
+      <div class="profile-img">
+        <img class="card-img-top" src="{{ url_for('static', filename='images/basketball.png') }}" alt="Profile Image">
+      </div>
 
-    <div class="sub-menu list-group list-group-flush">
-      <h3> {{user.username}}'s Profile</h3>
-      <a href="#" onclick="_activity()">
-        <li class="list-group-item list-group-item-action">Profile</li>
-      </a>
-      <a href="#" onclick="_friends()">
-        <li class="list-group-item list-group-item-action">Friends</li>
-      </a>
+      <h1 class="text-capitalize text-center">
+        {{user.first_name}} {{user.last_name}}
+      </h1>
+
+      <h2 class="text-center username">
+        {{user.username}}
+      </h2>
+
+      {% if user.court %}
+      <h3 class="text-muted text-center favortie-court">
+        <a class="text-muted" id="favorite-court" href="/court/{{user.court.id}}">
+          <img class="icons-sm" src="/static/open-iconic/svg/bookmark.svg">
+          {{user.court.name}}
+        </a>
+      </h3>
+      {% endif %}
+
+      <div class="text-center add-friend-btn">
+        <a href="/add/friend/{{user.id}}" class="btn btn-block btn-lg btn-outline-secondary">
+          <img class="icons" src="/static/open-iconic/svg/person.svg">
+          Add Friend
+        </a>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <div class="col-6">
-    <div class="profile-overview">
-      <div class="card-body">
-        <h1 class="text-capitalize">
-          {{user.first_name}} {{user.last_name}}
-          <a href="/add/friend/{{user.id}}" class="btn btn-outline-secondary">
-            <img class="add-friend" src="/static/open-iconic/svg/person.svg">
-            Add Friend
-          </a>
-        </h1>
-        {% if user.court %}
-        <h3 class="text-muted">
-          <a class="text-muted" id="favorite-court" href="/court/{{user.court.id}}">
-            Fave Court - {{user.court.name}}
-          </a>
-        </h3>
-        {% endif %}
-        <div class="row">
-          <div class="col-sm">
-            <p>Skill: {{user.skill_level}}</p>
-          </div>
-          <div class="col-sm">
-            <p>Games: {{user.court_visits}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="row menu-row">
 
-    <div class="sub-menu-content">
-      <div id="_activity">
-        {% include 'users/includes/_activity.html' %}
-      </div>
-      <div id="_friends">
-        {% include 'users/includes/_friends.html' %}
-      </div>
-    </div>
+  <div class="list-group list-group-flush menu-list-group">
+
+    <a class="list-group-item list-group-item-action">
+      <img class="icons" src="/static/open-iconic/svg/person.svg">
+      Friends
+    </a>
+    <a class="list-group-item list-group-item-action">
+      <img class="icons" src="/static/open-iconic/svg/comment-square.svg">
+      Reviews
+    </a>
+
   </div>
-
 </div>
 
 
