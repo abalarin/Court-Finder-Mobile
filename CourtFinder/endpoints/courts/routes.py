@@ -80,8 +80,20 @@ def add_review(id):
         court_review.review = add_review
         court_review.date = date_now()
 
-    db.session.add(court_review)
-    db.session.commit()
+    try:
+        db.session.add(court_review)
+        db.session.commit()
+    except Exception as e:
+        flash('There was an issue, plz try again!', 'danger')
+        # Clear any in-progress sqlalchemy transactions
+        try:
+            db.session.rollback()
+        except:
+            pass
+        try:
+            db.session.remove()
+        except:
+            pass
 
     return redirect(url_for("courts.list_court", id=id))
 
@@ -127,14 +139,27 @@ def create_court():
                 latitude=form.latitude.data,
                 longitude=form.longitude.data)
 
-            db.session.add(court)
-            db.session.commit()
+            try:
+                db.session.add(court)
+                db.session.commit()
 
-            # Upload Images
-            court = Court.query.filter_by(uid=uid).first()
-            create_court_images(request.files.getlist("court_images"), court.id)
+                # Upload Images
+                court = Court.query.filter_by(uid=uid).first()
+                create_court_images(request.files.getlist("court_images"), court.id)
 
-            flash("Court Created!", "success")
+                flash("Court Created!", "success")
+
+            except Exception as e:
+                flash('There was an issue, plz try again!', 'danger')
+                # Clear any in-progress sqlalchemy transactions
+                try:
+                    db.session.rollback()
+                except:
+                    pass
+                try:
+                    db.session.remove()
+                except:
+                    pass
             return redirect(url_for("courts.list_courts"))
         else:
             return render_template("courts/create_court.html", form=form)
@@ -162,8 +187,22 @@ def update_court(id):
             # Upload Images
             create_court_images(request.files.getlist("court_images"), id)
 
-            db.session.commit()
-            flash("Your court has been updated!", "success")
+            try:
+                db.session.commit()
+                flash("Your court has been updated!", "success")
+
+            except Exception as e:
+                flash('There was an issue, plz try again!', 'danger')
+                # Clear any in-progress sqlalchemy transactions
+                try:
+                    db.session.rollback()
+                except:
+                    pass
+                try:
+                    db.session.remove()
+                except:
+                    pass
+
             return redirect(url_for("courts.list_courts"))
 
         else:
@@ -180,8 +219,22 @@ def delete_court(id):
     if current_user.admin:
         if request.method == "GET":
             court = Court.query.filter_by(id=id).first()
-            db.session.delete(court)
-            db.session.commit()
+
+            try:
+                db.session.delete(court)
+                db.session.commit()
+
+            except Exception as e:
+                flash('There was an issue, plz try again!', 'danger')
+                # Clear any in-progress sqlalchemy transactions
+                try:
+                    db.session.rollback()
+                except:
+                    pass
+                try:
+                    db.session.remove()
+                except:
+                    pass
 
             delete_court_images(id)
             flash("Court has been deleted", "success")
